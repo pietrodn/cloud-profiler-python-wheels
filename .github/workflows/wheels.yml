@@ -5,8 +5,8 @@ on:
     branches:    
       - main
   pull_request:
-#   schedule:
-#     - cron: '35 5 * * *'
+  schedule:
+    - cron: '35 6 * * *'
 
 jobs:
   check_release:
@@ -21,7 +21,7 @@ jobs:
           latestRelease="$(gh api graphql -F owner=$OWNER -F name=$REPO -f query='
             query($name: String!, $owner: String!) {
               repository(owner: $owner, name: $name) {
-                releases(last: 1) {
+                releases(last: 1, orderBy: { field: CREATED_AT, direction: ASC }) {
                   nodes { tagName }
                 }
               }
