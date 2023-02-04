@@ -71,7 +71,7 @@ jobs:
           cd ${{ matrix.package }}-*/
           python -m cibuildwheel --output-dir ../wheelhouse
         env:
-          CIBW_ARCHS_LINUX: "auto aarch64"
+          CIBW_ARCHS_LINUX: "auto"
           CIBW_ARCHS_MACOS: "universal2"
           # Disable building PyPy wheels on all platforms
           CIBW_SKIP: "pp*"
