@@ -16,7 +16,8 @@ jobs:
       latest_version: ${{ steps.profiler_version.outputs.current_version }}
     runs-on: ubuntu-latest
     steps:
-      - id: get_release
+      - name: "Get latest GitHub release for this repo"
+        id: get_release
         run: |
           latestRelease="$(gh api graphql -F owner=$OWNER -F name=$REPO -f query='
             query($name: String!, $owner: String!) {
