@@ -46,7 +46,7 @@ jobs:
           echo "current_version=$LATEST_VERSION" >> $GITHUB_OUTPUT
           
           LATEST_RELEASE="${{ steps.get_release.outputs.release }}"
-          if [[ $LATEST_RELEASE == $LATEST_VERSION ]]; then
+          if [[ $LATEST_RELEASE == $LATEST_VERSION && false ]]; then
             echo "We already have a release for $LATEST_RELEASE. Skipping build."
             echo "should_build=0" >> $GITHUB_OUTPUT
           else
@@ -83,10 +83,9 @@ jobs:
           cd ${{ matrix.package }}-*/
           python -m cibuildwheel --output-dir ../wheelhouse
         env:
-          CIBW_ARCHS_LINUX: "auto"
+          CIBW_ARCHS_LINUX: "auto aarch64"
           CIBW_ARCHS_MACOS: "universal2"
-          # Disable building PyPy wheels on all platforms
-          CIBW_SKIP: "pp*"
+          CIBW_SKIP: "pp*"  # Disable building PyPy wheels on all platforms
           CIBW_TEST_SKIP: "*-*linux_{aarch64}"
           CIBW_PROJECT_REQUIRES_PYTHON: "<3.11"
 
