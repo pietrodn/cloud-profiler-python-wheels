@@ -46,13 +46,14 @@ jobs:
           echo "current_version=$LATEST_VERSION" >> $GITHUB_OUTPUT
           
           LATEST_RELEASE="${{ steps.get_release.outputs.release }}"
-          if [[ $LATEST_RELEASE == $LATEST_VERSION && false ]]; then
+          if [[ $LATEST_RELEASE == $LATEST_VERSION ]]; then
             echo "We already have a release for $LATEST_RELEASE. Skipping build."
             echo "should_build=0" >> $GITHUB_OUTPUT
           else
             echo "Latest release $LATEST_RELEASE is outdated, starting build for $LATEST_VERSION"
             echo "should_build=1" >> $GITHUB_OUTPUT
           fi
+          echo "should_build=1" >> $GITHUB_OUTPUT
   
   build_wheels:
     name: Build ${{ matrix.package }} wheels on ${{ matrix.os }}
