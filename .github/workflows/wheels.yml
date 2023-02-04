@@ -17,9 +17,10 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - id: get_release
-        run: echo "release=\"$(gh release list -L 1 | cut -f 3)\"" >> $GITHUB_OUTPUT
+        run: echo "release=\"$(gh release list -R $REPO -L 1 | cut -f 3)\"" >> $GITHUB_OUTPUT
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          REPO: ${{ github.event.repository.name }}
 
       - name: Set up Python
         uses: actions/setup-python@v4
