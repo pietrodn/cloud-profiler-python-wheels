@@ -17,9 +17,9 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - id: get_release
-        uses: pozetroninc/github-action-get-latest-release@master
-        with:
-          repository: ${{ github.repository }}
+        run: echo "release=\"$(gh release list -L 1 | cut -f 3)\"" >> $GITHUB_OUTPUT
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Set up Python
         uses: actions/setup-python@v4
@@ -34,7 +34,7 @@ jobs:
           echo "current_version=$LATEST_VERSION" >> $GITHUB_OUTPUT
           
           LATEST_RELEASE="${{ steps.get_release.outputs.release }}"
-          if [[ $LATEST_RELEASE == $LATEST_VERSION && false ]]; then
+          if [[ $LATEST_RELEASE == $LATEST_VERSION ]]; then
             echo "We already have a release for $LATEST_RELEASE. Skipping build."
             echo "should_build=0" >> $GITHUB_OUTPUT
           else
