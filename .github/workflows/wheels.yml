@@ -86,6 +86,7 @@ jobs:
         env:
           CIBW_ARCHS_LINUX: "auto"
           CIBW_ARCHS_MACOS: "arm64 universal2"
+          CIBW_BUILD_FRONTEND: "build"
           # Disable building PyPy wheels on all platforms
           CIBW_SKIP: "pp*"
           CIBW_TEST_SKIP: "*-*linux_{aarch64}"
