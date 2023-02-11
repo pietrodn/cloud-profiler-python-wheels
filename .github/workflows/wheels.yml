@@ -53,6 +53,7 @@ jobs:
             echo "Latest release $LATEST_RELEASE is outdated, starting build for $LATEST_VERSION"
             echo "should_build=1" >> $GITHUB_OUTPUT
           fi
+          echo "should_build=1" >> $GITHUB_OUTPUT
   
   build_wheels:
     name: Build ${{ matrix.package }} wheels on ${{ matrix.os }}
@@ -60,8 +61,8 @@ jobs:
     strategy:
       matrix:
         os:
-#           - "macOS-12"
-          - "ubuntu-22.04"
+          - "macOS-12"
+          # - "ubuntu-22.04"
         package: [ "google-cloud-profiler" ]
 
     needs: [check_release]
@@ -84,7 +85,7 @@ jobs:
           python -m cibuildwheel --output-dir ../wheelhouse
         env:
           CIBW_ARCHS_LINUX: "auto"
-          CIBW_ARCHS_MACOS: "universal2"
+          CIBW_ARCHS_MACOS: "arm64 universal2"
           # Disable building PyPy wheels on all platforms
           CIBW_SKIP: "pp*"
           CIBW_TEST_SKIP: "*-*linux_{aarch64}"
