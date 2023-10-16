@@ -65,7 +65,7 @@ jobs:
         package: [ "google-cloud-profiler" ]
 
     needs: [check_release]
-    if: needs.check_release.outputs.should_build == '1'
+    # if: needs.check_release.outputs.should_build == '1'
     steps:
       # Used to host cibuildwheel
       - uses: actions/setup-python@v3
@@ -88,7 +88,7 @@ jobs:
           # Disable building PyPy wheels on all platforms
           CIBW_SKIP: "pp*"
           CIBW_TEST_SKIP: "*-*linux_{aarch64}"
-          CIBW_PROJECT_REQUIRES_PYTHON: "<3.11"
+          CIBW_PROJECT_REQUIRES_PYTHON: "<3.13"
 
       - uses: actions/upload-artifact@v3
         with:
